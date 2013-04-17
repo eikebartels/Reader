@@ -29,6 +29,8 @@
 
 - (id)initWithURL:(NSURL *)fileURL page:(NSInteger)page password:(NSString *)phrase;
 
+- (id)initWithData:(NSData *)data page:(NSInteger)page password:(NSString *)phrase;
+
 - (id)processSingleTap:(UITapGestureRecognizer *)recognizer;
 
 @end
@@ -48,5 +50,7 @@
 + (id)newWithRect:(CGRect)linkRect dictionary:(CGPDFDictionaryRef)linkDictionary;
 
 - (id)initWithRect:(CGRect)linkRect dictionary:(CGPDFDictionaryRef)linkDictionary;
+
+
 
 @end

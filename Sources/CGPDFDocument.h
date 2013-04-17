@@ -31,5 +31,6 @@
 //
 
 CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef theURL, NSString *password);
+CGPDFDocumentRef CGPDFDocumentCreateFromData(NSData * data, NSString *password);
 
 BOOL CGPDFDocumentNeedsPassword(CFURLRef theURL, NSString *password);
