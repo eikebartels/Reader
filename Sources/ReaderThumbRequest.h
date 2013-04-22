@@ -39,9 +39,14 @@
 @property (nonatomic, assign, readonly) NSInteger thumbPage;
 @property (nonatomic, assign, readonly) CGSize thumbSize;
 @property (nonatomic, assign, readonly) CGFloat scale;
+@property (nonatomic, strong, readonly) NSData* pdfData;
 
 + (id)newForView:(ReaderThumbView *)view fileURL:(NSURL *)url password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size;
 
++ (id)newForView:(ReaderThumbView *)view pdfData:(NSData *)pdfData password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size;
+
 - (id)initWithView:(ReaderThumbView *)view fileURL:(NSURL *)url password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size;
+
+- (id)initWithView:(ReaderThumbView *)view pdfData:(NSData *)pdfData password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size;
 
 @end

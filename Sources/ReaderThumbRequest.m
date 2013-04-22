@@ -47,6 +47,8 @@
 	CGSize _thumbSize;
 
 	CGFloat _scale;
+    
+    NSData * _pdfData;
 }
 
 #pragma mark Properties
@@ -61,12 +63,19 @@
 @synthesize targetTag = _targetTag;
 @synthesize cacheKey = _cacheKey;
 @synthesize scale = _scale;
+@synthesize pdfData = _pdfData;
 
 #pragma mark ReaderThumbRequest class methods
 
 + (id)newForView:(ReaderThumbView *)view fileURL:(NSURL *)url password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size
 {
 	return [[ReaderThumbRequest alloc] initWithView:view fileURL:url password:phrase guid:guid page:page size:size];
+}
+
++ (id)newForView:(ReaderThumbView *)view pdfData:(NSData *)pdfData password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size
+{
+    return [[ReaderThumbRequest alloc] initWithView:view pdfData:pdfData password:phrase guid:guid page:page size:size];
+	//return [[ReaderThumbRequest alloc] initWithView:view fileURL:url password:phrase guid:guid page:page size:size];
 }
 
 #pragma mark ReaderThumbRequest instance methods
@@ -90,6 +99,30 @@
 		_scale = [[UIScreen mainScreen] scale]; // Thumb screen scale
 	}
 
+	return self;
+}
+
+- (id)initWithView:(ReaderThumbView *)view pdfData:(NSData *)pdfData password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size
+{
+	if ((self = [super init])) // Initialize object
+	{
+		NSInteger w = size.width; NSInteger h = size.height;
+        
+		_thumbView = view; _thumbPage = page; _thumbSize = size;
+        
+		_pdfData = [pdfData copy];
+        _password = [phrase copy];
+        _guid = [guid copy];
+        
+		_thumbName = [[NSString alloc] initWithFormat:@"%07d-%04dx%04d", page, w, h];
+        
+		_cacheKey = [[NSString alloc] initWithFormat:@"%@+%@", _thumbName, _guid];
+        
+		_targetTag = [_cacheKey hash]; _thumbView.targetTag = _targetTag;
+        
+		_scale = [[UIScreen mainScreen] scale]; // Thumb screen scale
+	}
+    
 	return self;
 }
 

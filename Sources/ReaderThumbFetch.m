@@ -58,6 +58,15 @@
 	[[ReaderThumbCache sharedInstance] removeNullForKey:request.cacheKey];
 }
 
+- (NSData *)thumbFileData
+{
+	NSString *cachePath = [ReaderThumbCache thumbCachePathForGUID:request.guid]; // Thumb cache path
+    
+	NSString *fileName = [NSString stringWithFormat:@"%@.png", request.thumbName]; // Thumb file name
+    
+	return [NSURL fileURLWithPath:[cachePath stringByAppendingPathComponent:fileName]]; // File URL
+}
+
 - (NSURL *)thumbFileURL
 {
 	NSString *cachePath = [ReaderThumbCache thumbCachePathForGUID:request.guid]; // Thumb cache path
@@ -69,9 +78,9 @@
 
 - (void)main
 {
+    
 	CGImageRef imageRef = NULL; NSURL *thumbURL = [self thumbFileURL];
-
-	CGImageSourceRef loadRef = CGImageSourceCreateWithURL((__bridge CFURLRef)thumbURL, NULL);
+    CGImageSourceRef loadRef = CGImageSourceCreateWithURL((__bridge CFURLRef)thumbURL, NULL);
 
 	if (loadRef != NULL) // Load the existing thumb image
 	{

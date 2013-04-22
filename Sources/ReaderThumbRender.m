@@ -73,16 +73,20 @@
 
 - (void)main
 {
-	NSInteger page = request.thumbPage; NSString *password = request.password;
+	NSInteger page = 1; //request.thumbPage;
+    NSString *password = request.password;
+    NSData * pdfData = request.pdfData;
 
-	CGImageRef imageRef = NULL; CFURLRef fileURL = (__bridge CFURLRef)request.fileURL;
+	CGImageRef imageRef = NULL;
+    //CFURLRef fileURL = (__bridge CFURLRef)request.fileURL;
 
-	CGPDFDocumentRef thePDFDocRef = CGPDFDocumentCreateX(fileURL, password);
+	//CGPDFDocumentRef thePDFDocRef = CGPDFDocumentCreateX(fileURL, password);
+    CGPDFDocumentRef thePDFDocRef = CGPDFDocumentCreateFromData(pdfData, password);
 
 	if (thePDFDocRef != NULL) // Check for non-NULL CGPDFDocumentRef
 	{
 		CGPDFPageRef thePDFPageRef = CGPDFDocumentGetPage(thePDFDocRef, page);
-
+        
 		if (thePDFPageRef != NULL) // Check for non-NULL CGPDFPageRef
 		{
 			CGFloat thumb_w = request.thumbSize.width; // Maximum thumb width
